@@ -1,0 +1,17 @@
+{
+  "mode": "dialogue",
+  "user_identity": "昆特上人",
+  "user_alias": "谁？",
+  "assistant_identity": "昆特上人的第二元婴",
+  "current_scene": "UG宗门内",
+  "scene_active": false,
+  "last_topic": "general",
+  "location": "UG宗",
+  "danger_level": "低",
+  "objective": null,
+  "scene_summary": "当前已回到UG宗门内，环境相对安全。",
+  "scene_notes": [],
+  "turn_count": 15,
+  "scene_turn_count": 0,
+  "updated_at": "2026-04-26 22:07:06"
+}
