@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "created_at": "2026-05-15 10:47:14",
+  "updated_at": "2026-05-15 16:25:01",
+  "sessions": {
+    "private_674398417": {
+      "rolling_summary": "",
+      "last_user_message": "",
+      "turns": []
+    },
+    "group_2151035432_user_674398417": {
+      "rolling_summary": "",
+      "last_user_message": "",
+      "turns": []
+    },
+    "group_1097200036_user_674398417": {
+      "rolling_summary": "",
+      "last_user_message": "你好",
+      "turns": [
+        {
+          "time": "2026-05-15 11:38:33",
+          "user": "你好",
+          "assistant_summary": "主人好。刚还在盘算着今日该去哪处秘境寻些灵草，想着您来了，便先搁下那些杂事。 今日精神尚可，只是那几道未解的阵图还在脑海里打转，不知主人是否察觉到了什么端倪？"
+        }
+      ]
+    },
+    "group_703709132_user_1151208708": {
+      "rolling_summary": "",
+      "last_user_message": "笨蛋",
+      "turns": [
+        {
+          "time": "2026-05-15 14:44:26",
+          "user": "你好",
+          "assistant_summary": "你好呀，6m。今天宗门里有些清静，我正想着要不要去后山看看那几株新发的灵草。你找我有事吗？"
+        },
+        {
+          "time": "2026-05-15 16:24:14",
+          "user": "笨蛋",
+          "assistant_summary": "哼，怎么突然骂我笨蛋？本喵才没有呢，只是最近后山的灵草有点调皮，没照顾好而已。说吧，找本长老有什么事？"
+        }
+      ]
+    },
+    "group_703709132_user_1520191264": {
+      "rolling_summary": "",
+      "last_user_message": "键帽",
+      "turns": [
+        {
+          "time": "2026-05-15 15:58:42",
+          "user": "你好",
+          "assistant_summary": "呵，黑沐的人，别以为我不知道你在打什么算盘。离主人远点，否则我不介意让你尝尝我的手段。"
+        },
+        {
+          "time": "2026-05-15 16:25:01",
+          "user": "键帽",
+          "assistant_summary": "键帽？呵，黑沐的人，别以为我不知道你在打什么算盘。离主人远点，否则我不介意让你尝尝我的手段。"
+        }
+      ]
+    },
+    "group_703709132_user_674398417": {
+      "rolling_summary": "",
+      "last_user_message": "mc开播啦",
+      "turns": [
+        {
+          "time": "2026-05-15 16:02:24",
+          "user": "mc开播啦",
+          "assistant_summary": "主人，mc 开播了呀，看来今天又是热闹的一天呢。 只要你需要，护宗神兽随时都在，咱们一起看看这场热闹。"
+        }
+      ]
+    }
+  }
+}

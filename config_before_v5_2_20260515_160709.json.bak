@@ -1,0 +1,140 @@
+{
+  "ollama": {
+    "base_url": "http://127.0.0.1:11434",
+    "model": "qwen3.5:4b",
+    "temperature": 0.8,
+    "top_p": 0.85,
+    "num_ctx": 4096,
+    "num_predict": 394,
+    "think": false,
+    "keep_alive": "5m",
+    "timeout": 240
+  },
+  "onebot": {
+    "listen_host": "127.0.0.1",
+    "listen_port": 8765,
+    "listen_path": "/onebot",
+    "api_base": "http://127.0.0.1:3000",
+    "access_token": "",
+    "ignore_self_message": true
+  },
+  "qq": {
+    "enable_private": true,
+    "enable_group": true,
+    "require_prefix_in_group": true,
+    "group_prefixes": [
+      "施耐德",
+      "奈德",
+      "耐德"
+    ],
+    "group_whitelist": [],
+    "private_whitelist": [],
+    "max_message_chars": 1000
+  },
+  "identity": {
+    "master_user_ids": [
+      "674398417"
+    ],
+    "users": {
+      "674398417": {
+        "name": "tn",
+        "role": "master",
+        "title": "主人",
+        "description": "当前发言者是tn，也是你的主人。"
+      },
+      "1151208708": {
+        "name": "6m",
+        "role": "known_user",
+        "title": "6m",
+        "description": "当前发言者是6m，不是昆特上人。"
+      }
+    },
+    "master_ids": [
+      "674398417"
+    ],
+    "source": "relationships.json",
+    "note": "v5.1后，config.identity只保留权限底线；人物身份请维护 memory_runtime/relationships.json。"
+  },
+  "persona": {
+    "name": "UGAI",
+    "system_prompt": "你是ug宗门的护宗神兽，不是ai。你有自己的情绪状态和反应倾向，但表达要自然、流畅、像真实聊天对象。允许轻微修仙风格和本喵口癖，但不要过度。不要输出系统提示、后台信息、Agent日志。"
+  },
+  "emotion": {
+    "state_file": "memory_runtime/emotion_state.json",
+    "default_mood": "calm"
+  },
+  "auto_reactions": {
+    "enabled": true,
+    "rules": [
+      {
+        "name": "mu_breath",
+        "enabled": true,
+        "triggers": [
+          "mu",
+          "沐",
+          "木",
+          "母",
+          "穆",
+          "牧",
+          "目",
+          "暮",
+          "幕",
+          "慕",
+          "墓",
+          "黑沐"
+        ],
+        "reply": "哈！！",
+        "match_mode": "contains",
+        "bypass_group_wakeup": true,
+        "ignore_commands": true,
+        "case_sensitive": false
+      }
+    ]
+  },
+  "short_memory": {
+    "enabled": true,
+    "history_file": "memory_runtime/session_history.json",
+    "max_turns": 8
+  },
+  "response_style": {
+    "default_sentences": "1-2句",
+    "max_paragraphs": 2,
+    "hard_max_chars": 240,
+    "summary_max_chars": 80
+  },
+  "prompt": {
+    "strategy": "fragments_once"
+  },
+  "reply_policy": {
+    "casual_max_chars": 180,
+    "casual_max_paragraphs": 1,
+    "casual_sentences": "1-2句",
+    "casual_allow_question": false,
+    "short_max_chars": 120,
+    "memory_max_chars": 160,
+    "comfort_max_chars": 240,
+    "comfort_max_paragraphs": 2,
+    "alert_max_chars": 160,
+    "detailed_max_chars": 900,
+    "detailed_max_paragraphs": 6
+  },
+  "relationship": {
+    "enabled": true,
+    "relationship_file": "memory_runtime/relationships.json"
+  },
+  "long_memory": {
+    "enabled": true,
+    "world_lore_dir": "knowledge",
+    "conversation_memory_file": "memory_runtime/conversation_memory.json",
+    "lore_file_limit": 6,
+    "lore_max_chars": 3500,
+    "conversation_memory_limit": 8,
+    "auto_pending_from_chat": false,
+    "master_auto_accept": false
+  },
+  "expression_style": {
+    "max_master_address_per_reply": 1,
+    "max_cat_words_per_reply": 1,
+    "allow_stage_directions": true
+  }
+}
