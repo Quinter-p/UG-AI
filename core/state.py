@@ -4,6 +4,8 @@ Route = Literal["continue", "ignore", "auto_reply", "command_reply", "llm_reply"
 
 class AgentState(TypedDict, total=False):
     raw_event: dict
+    event_context: dict
+
     message_type: str
     user_id: str
     group_id: Optional[str]
@@ -25,6 +27,18 @@ class AgentState(TypedDict, total=False):
 
     # Speak decision
     speak_decision: dict
+
+    # Event / memory / task / tools
+    event_log_id: int
+    reflection_status: str
+    fact_memory_items: list[dict]
+    fact_memory_text: str
+    reflection_memory_items: list[dict]
+    reflection_memory_text: str
+    task_items: list[dict]
+    task_memory_text: str
+    tool_call_items: list[dict]
+    tool_bus_text: str
 
     # Short-term memory
     session_key: str

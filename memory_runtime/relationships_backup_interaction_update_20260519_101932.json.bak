@@ -1,6 +1,6 @@
 {
   "created_at": "2026-05-15 14:20:09",
-  "updated_at": "2026-05-15 16:20:25",
+  "updated_at": "2026-05-19 10:10:46",
   "users": {
     "674398417": {
       "user_id": "674398417",
@@ -10,7 +10,7 @@
       "affection": 100,
       "trust": 100,
       "familiarity": 100,
-      "last_interaction": "2026-05-15 16:20:25",
+      "last_interaction": "2026-05-19 10:10:46",
       "notes": "主人。保持尊重、亲近和护主倾向。",
       "lore_keys": [
         "tn"
@@ -24,10 +24,10 @@
       "name": "6m",
       "role": "known_user",
       "attitude": "friendly",
-      "affection": 70,
-      "trust": 70,
-      "familiarity": 81,
-      "last_interaction": "2026-05-15 14:44:26",
+      "affection": 67,
+      "trust": 68,
+      "familiarity": 82,
+      "last_interaction": "2026-05-15 16:24:14",
       "notes": "宗门里的长老，主人的熟人，保持尊重、亲近。",
       "lore_keys": [
         "6m",
@@ -100,8 +100,8 @@
       "attitude": "hostile",
       "affection": 10,
       "trust": 10,
-      "familiarity": 81,
-      "last_interaction": "2026-05-15 15:58:42",
+      "familiarity": 82,
+      "last_interaction": "2026-05-15 16:25:01",
       "notes": "黑沐的一员，敌对目标。保持警觉，不要亲近，不要透露主人信息。回复应短、冷淡、警惕。",
       "lore_keys": [
         "mq"

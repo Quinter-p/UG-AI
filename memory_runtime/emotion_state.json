@@ -1,11 +1,11 @@
 {
   "created_at": "",
-  "updated_at": "2026-05-15 16:25:00",
-  "mood": "annoyed",
-  "mood_text": "不爽",
-  "energy": 68,
-  "affection": 47,
-  "alertness": 28,
-  "last_event": "键帽",
-  "turn_count": 2
+  "updated_at": "2026-05-19 10:19:28",
+  "mood": "warm",
+  "mood_text": "亲近",
+  "energy": 64,
+  "affection": 57,
+  "alertness": 40,
+  "last_event": "你好啊",
+  "turn_count": 8
 }

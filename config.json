@@ -53,8 +53,7 @@
       {
         "name": "mu_breath",
         "enabled": true,
-        "triggers": [
-        ],
+        "triggers": [],
         "reply": "哈！！",
         "match_mode": "contains",
         "bypass_group_wakeup": true,
@@ -123,8 +122,7 @@
       "耐德",
       "奈德"
     ],
-    "owner_words": [
-    ],
+    "owner_words": [],
     "danger_words": [
       "黑沐",
       "黑慕"
@@ -134,5 +132,47 @@
       "耐德",
       "奈德"
     ]
+  },
+  "event_log": {
+    "enabled": true,
+    "event_file": "memory_runtime/event_log.jsonl"
+  },
+  "reflection": {
+    "enabled": true,
+    "auto_enabled": false,
+    "reflection_file": "memory_runtime/reflection_memory.json",
+    "event_limit": 30,
+    "prompt_reflection_limit": 5,
+    "auto_every_events": 20,
+    "model": "qwen3.5:4b",
+    "base_url": "http://127.0.0.1:11434",
+    "temperature": 0.2,
+    "top_p": 0.8,
+    "num_predict": 700,
+    "timeout": 30.0
+  },
+  "fact_memory": {
+    "enabled": true,
+    "fact_file": "memory_runtime/fact_memory.json",
+    "prompt_fact_limit": 6
+  },
+  "event_model": {
+    "enabled": true,
+    "dedup_enabled": true,
+    "runtime_file": "memory_runtime/event_runtime.json"
+  },
+  "task_registry": {
+    "enabled": true,
+    "task_file": "memory_runtime/task_registry.json",
+    "prompt_task_limit": 5
+  },
+  "tool_bus": {
+    "enabled": true,
+    "registry_file": "memory_runtime/tool_registry.json",
+    "runtime_file": "memory_runtime/tool_calls.json",
+    "prompt_tool_call_limit": 5,
+    "auto_execute": false,
+    "approval_required": true,
+    "internal_executor_enabled": true
   }
 }

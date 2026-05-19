@@ -4,6 +4,7 @@ from langgraph.graph import StateGraph, START, END
 from core.state import AgentState
 from core.config import load_config
 from core.nodes.parse_event import parse_event_node
+from core.nodes.event_context import event_context_node
 from core.nodes.identity import identity_node
 from core.nodes.relationship import relationship_load_node, relationship_save_node
 from core.nodes.relationship_policy import relationship_policy_node
@@ -13,28 +14,39 @@ from core.nodes.speak_decision import speak_decision_node
 from core.nodes.emotion import emotion_node
 from core.nodes.history import history_load_node, history_save_node
 from core.nodes.long_memory import long_memory_load_node
+from core.nodes.fact_memory import fact_memory_load_node
+from core.nodes.reflection import reflection_memory_load_node, reflection_maybe_node
+from core.nodes.task_memory import task_memory_load_node
+from core.nodes.tool_bus import tool_bus_load_node
 from core.nodes.reply_policy import reply_policy_node
 from core.nodes.expression_style import expression_style_node
 from core.nodes.prompt import prompt_node
 from core.nodes.expression import expression_node
 from core.nodes.output_filter import output_filter_node
+from core.nodes.event_log import event_log_save_node
 
 
-def after_relationship_policy(state: AgentState) -> Literal["end", "reflex"]:
+def after_event_context(state: AgentState) -> Literal["end", "identity"]:
     if state.get("route") == "ignore":
         return "end"
+    return "identity"
+
+
+def after_relationship_policy(state: AgentState) -> Literal["terminal_log", "reflex"]:
+    if state.get("route") == "ignore":
+        return "terminal_log"
     return "reflex"
 
 
-def after_reflex(state: AgentState) -> Literal["end", "command"]:
+def after_reflex(state: AgentState) -> Literal["terminal_log", "command"]:
     if state.get("route") == "auto_reply":
-        return "end"
+        return "terminal_log"
     return "command"
 
 
-def after_command(state: AgentState) -> Literal["end", "speak_decision"]:
+def after_command(state: AgentState) -> Literal["terminal_log", "speak_decision"]:
     if state.get("route") == "command_reply":
-        return "end"
+        return "terminal_log"
     return "speak_decision"
 
 
@@ -48,6 +60,7 @@ def build_graph():
     builder = StateGraph(AgentState)
 
     builder.add_node("parse_event", parse_event_node)
+    builder.add_node("event_context", event_context_node)
     builder.add_node("identity", identity_node)
     builder.add_node("relationship_load", relationship_load_node)
     builder.add_node("relationship_policy", relationship_policy_node)
@@ -57,34 +70,71 @@ def build_graph():
     builder.add_node("emotion", emotion_node)
     builder.add_node("history_load", history_load_node)
     builder.add_node("long_memory_load", long_memory_load_node)
+    builder.add_node("fact_memory_load", fact_memory_load_node)
+    builder.add_node("reflection_memory_load", reflection_memory_load_node)
+    builder.add_node("task_memory_load", task_memory_load_node)
+    builder.add_node("tool_bus_load", tool_bus_load_node)
     builder.add_node("reply_policy", reply_policy_node)
     builder.add_node("expression_style", expression_style_node)
     builder.add_node("prompt", prompt_node)
     builder.add_node("expression", expression_node)
     builder.add_node("output_filter", output_filter_node)
+    builder.add_node("event_log_save", event_log_save_node)
+    builder.add_node("event_log_terminal", event_log_save_node)
     builder.add_node("history_save", history_save_node)
     builder.add_node("relationship_save", relationship_save_node)
+    builder.add_node("reflection_maybe", reflection_maybe_node)
 
     builder.add_edge(START, "parse_event")
-    builder.add_edge("parse_event", "identity")
+    builder.add_edge("parse_event", "event_context")
+    builder.add_conditional_edges(
+        "event_context",
+        after_event_context,
+        {"end": END, "identity": "identity"},
+    )
+
     builder.add_edge("identity", "relationship_load")
     builder.add_edge("relationship_load", "relationship_policy")
-    builder.add_conditional_edges("relationship_policy", after_relationship_policy, {"end": END, "reflex": "reflex"})
+    builder.add_conditional_edges(
+        "relationship_policy",
+        after_relationship_policy,
+        {"terminal_log": "event_log_terminal", "reflex": "reflex"},
+    )
 
-    builder.add_conditional_edges("reflex", after_reflex, {"end": END, "command": "command"})
-    builder.add_conditional_edges("command", after_command, {"end": END, "speak_decision": "speak_decision"})
-    builder.add_conditional_edges("speak_decision", after_speak_decision, {"end": END, "emotion": "emotion"})
+    builder.add_conditional_edges(
+        "reflex",
+        after_reflex,
+        {"terminal_log": "event_log_terminal", "command": "command"},
+    )
+    builder.add_conditional_edges(
+        "command",
+        after_command,
+        {"terminal_log": "event_log_terminal", "speak_decision": "speak_decision"},
+    )
+    builder.add_conditional_edges(
+        "speak_decision",
+        after_speak_decision,
+        {"end": END, "emotion": "emotion"},
+    )
+
+    builder.add_edge("event_log_terminal", END)
 
     builder.add_edge("emotion", "history_load")
     builder.add_edge("history_load", "long_memory_load")
-    builder.add_edge("long_memory_load", "reply_policy")
+    builder.add_edge("long_memory_load", "fact_memory_load")
+    builder.add_edge("fact_memory_load", "reflection_memory_load")
+    builder.add_edge("reflection_memory_load", "task_memory_load")
+    builder.add_edge("task_memory_load", "tool_bus_load")
+    builder.add_edge("tool_bus_load", "reply_policy")
     builder.add_edge("reply_policy", "expression_style")
     builder.add_edge("expression_style", "prompt")
     builder.add_edge("prompt", "expression")
     builder.add_edge("expression", "output_filter")
-    builder.add_edge("output_filter", "history_save")
+    builder.add_edge("output_filter", "event_log_save")
+    builder.add_edge("event_log_save", "history_save")
     builder.add_edge("history_save", "relationship_save")
-    builder.add_edge("relationship_save", END)
+    builder.add_edge("relationship_save", "reflection_maybe")
+    builder.add_edge("reflection_maybe", END)
 
     return builder.compile()
 

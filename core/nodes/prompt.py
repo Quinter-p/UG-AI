@@ -5,6 +5,10 @@ from core.prompts.relationship_policy import build_relationship_policy_fragment
 from core.prompts.emotion import build_emotion_fragment
 from core.prompts.memory import build_memory_fragment
 from core.prompts.long_memory import build_world_lore_fragment, build_conversation_memory_fragment
+from core.prompts.fact_memory import build_fact_memory_fragment
+from core.prompts.reflection_memory import build_reflection_memory_fragment
+from core.prompts.task_memory import build_task_memory_fragment
+from core.prompts.tool_bus import build_tool_bus_fragment
 from core.prompts.style import build_style_fragment
 from core.prompts.expression_style import build_expression_style_fragment
 from core.prompts.speak import build_speak_decision_fragment
@@ -23,6 +27,10 @@ def prompt_node(state):
     emotion_fragment = build_emotion_fragment(state.get("emotion_state") or {})
     world_lore_fragment = build_world_lore_fragment(state.get("world_lore_text", ""))
     conversation_memory_fragment = build_conversation_memory_fragment(state.get("conversation_memory_text", ""))
+    fact_memory_fragment = build_fact_memory_fragment(state.get("fact_memory_text", ""))
+    reflection_memory_fragment = build_reflection_memory_fragment(state.get("reflection_memory_text", ""))
+    task_memory_fragment = build_task_memory_fragment(state.get("task_memory_text", ""))
+    tool_bus_fragment = build_tool_bus_fragment(state.get("tool_bus_text", ""))
     short_memory_fragment = build_memory_fragment(
         rolling_summary=state.get("rolling_summary", ""),
         turns=state.get("history_turns", []),
@@ -41,6 +49,10 @@ def prompt_node(state):
         "emotion": emotion_fragment,
         "world_lore": world_lore_fragment,
         "conversation_memory": conversation_memory_fragment,
+        "fact_memory": fact_memory_fragment,
+        "reflection_memory": reflection_memory_fragment,
+        "task_memory": task_memory_fragment,
+        "tool_bus": tool_bus_fragment,
         "short_memory": short_memory_fragment,
         "reply_policy": str(reply_policy),
         "reply_style": style_fragment,
@@ -56,6 +68,10 @@ def prompt_node(state):
         {"role": "system", "content": "[内部情绪状态]\n" + emotion_fragment},
         {"role": "system", "content": "[世界观设定]\n" + world_lore_fragment},
         {"role": "system", "content": "[长期个人记忆]\n" + conversation_memory_fragment},
+        {"role": "system", "content": "[事实记忆]\n" + fact_memory_fragment},
+        {"role": "system", "content": "[反思记忆]\n" + reflection_memory_fragment},
+        {"role": "system", "content": "[任务登记表]\n" + task_memory_fragment},
+        {"role": "system", "content": "[工具总线]\n" + tool_bus_fragment},
         {"role": "system", "content": "[短期对话]\n" + short_memory_fragment},
         {"role": "system", "content": "[发言决策]\n" + speak_decision_fragment},
         {"role": "system", "content": "[本轮回复预算]\n" + style_fragment},
@@ -72,7 +88,7 @@ def prompt_node(state):
         "prompt_fragments": prompt_fragments,
         "prompt_messages": prompt_messages,
         "prompt_meta": {
-            "builder_strategy": "fragments_with_speak_decision",
+            "builder_strategy": "fragments_with_tool_bus",
             "speak_reason": speak.get("reason", ""),
             "speak_mode": speak.get("mode", ""),
             "reply_mode": reply_policy.get("mode", "unknown"),
@@ -82,6 +98,10 @@ def prompt_node(state):
             "history_turns_used": len(state.get("history_turns", [])),
             "world_lore_files_used": state.get("world_lore_files", []),
             "conversation_memory_items_used": len(state.get("conversation_memory_items", [])),
+            "fact_memory_items_used": len(state.get("fact_memory_items", [])),
+            "reflection_memory_items_used": len(state.get("reflection_memory_items", [])),
+            "task_items_used": len(state.get("task_items", [])),
+            "tool_call_items_used": len(state.get("tool_call_items", [])),
             "has_rolling_summary": bool(state.get("rolling_summary", "")),
             "has_last_user_message": bool(state.get("last_user_message", "")),
             "relationship_role": rel.get("role", "unknown"),
